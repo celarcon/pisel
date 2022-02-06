@@ -1,17 +1,18 @@
 import { createContext, useContext } from "react";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
 export const authContext = createContext();
 
 export const useAuth=()=>{
     const context = useContext(authContext);
+    if(!context) throw new Error("There in not auth provider");
     return context;
 }
 
 export function AuthProvider({ children }){
 
-    const user ={
-        login: true
-    };
-
-    return <authContext.Provider value={{ user }}>{ children }</authContext.Provider>;
+    const singup = (email, password) => createUserWithEmailAndPassword(auth, email, password);
+    
+    return <authContext.Provider value={{ singup }}>{ children }</authContext.Provider>;
 }
