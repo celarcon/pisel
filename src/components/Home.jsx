@@ -17,18 +17,25 @@ export function Home(){
     if(!loading) console.log(user);
 
     return (
-        <div>
+        <>
             <motion.nav
+                className="bg-white rounded-r-lg"
                 initial={false}
-                animate={isOpen ? "open" : "closed"}
+                animate={isOpen ?  {width: 300} : {width: 55}}
                 >
-                <MenuToggle toggle={() => toggleOpen()} />
+                <motion.div  initial={false} animate={isOpen ? "open" : "closed"}>
+                    <MenuToggle toggle={() => toggleOpen()}/>
+                </motion.div>
+                <motion.div
+                        className="mt-32"
+                        initial={false}
+                        animate={isOpen ? {x: 100} : {x:-100}}>
+                        {user.displayName || user.email}
+                    </motion.div>
             </motion.nav>
-            <h1>HOME</h1>
-            <p>
-                { user.displayName || user.email }
-            </p>
-            <p><button onClick={handleLogout}>Salir</button></p>
-        </div>
+            <button 
+            className="absolute top-0 right-0 mx-5 my-4 text-purple-800 font-bold text-xl"
+            onClick={handleLogout}>Salir</button>
+        </>
         );
 }
