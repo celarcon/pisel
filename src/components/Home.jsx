@@ -1,11 +1,20 @@
 import { useAuth } from "../context/authContext";
-import React from 'react'
 
 export function Home(){
 
-    const {user} = useAuth();
+    const {user, logout, loading} = useAuth();
 
-    console.log(user);
+    const handleLogout = async () =>{
+        await logout();
+    }
 
-    return <div>HOME 1</div>;
+    if(loading) return <p>Cargando...</p>
+
+    return (
+        <div>
+            <h1>HOME</h1>
+            <p>{user.email}</p>
+            <p><button onClick={handleLogout}>Salir</button></p>
+        </div>
+        );
 }

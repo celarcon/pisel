@@ -22,12 +22,14 @@ export function Register(){
 
     const handleSubmit = async e =>{
         e.preventDefault();
+        setError('');
         try{
             await singup(user.email, user.password);
             navigate('/');
         }catch(error){
-            error.code === 'auth/invalid-email' ? setError('correo invalido'):
-            error.code === 'auth/weak-password' ? setError('la contraseña debe tener al menos 6 caracteres'):
+            error.code === 'auth/invalid-email' ? setError('Correo invalido'):
+            error.code === 'auth/weak-password' ? setError('La contraseña debe tener al menos 6 caracteres'):
+            error.code === 'auth/email-already-in-use' ? setError('El correo ya esta en uso'):
             console.log(error.message);
         }
     }
