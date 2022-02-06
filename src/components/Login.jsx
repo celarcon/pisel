@@ -12,7 +12,7 @@ export function Login(){
 
     const [ error ,setError ] = useState();
 
-    const { login, loginWithGoogle } = useAuth();
+    const { login, loginWithGoogle, reserPassword } = useAuth();
 
     const navigate = useNavigate();
 
@@ -29,8 +29,22 @@ export function Login(){
             navigate('/');
         }catch(error){
             error.code === 'auth/invalid-email' ? setError('Correo invalido'):
-            error.code === 'auth/weak-password' ? setError('La contraseña debe tener al menos 6 caracteres'):
-            error.code === 'auth/email-already-in-use' ? setError('El correo ya esta en uso'):
+            error.code === 'auth/wrong-password' ? setError('Contraseña erronea'):
+            setError(error.message);
+        }
+    }
+
+    const handleReserPassword = async e =>{
+        e.preventDefault();
+        
+        try{
+            if(!user.email){
+                return setError('Introduce un correo');
+            }else{ 
+                await reserPassword(user.email);
+                setError('Hemos enviado un correo para resetear tu contraseña');
+            }
+        }catch(error){
             console.log(error.message);
         }
     }
@@ -38,27 +52,38 @@ export function Login(){
     const handleGoogleLogin = async e =>{
         try{
             await loginWithGoogle();
-        navigate('/');
+            navigate('/');
         }catch(error){
             console.log(error.message);
         }
         
     }
     return (
-        <div>
-            {error && <Alert message={error}/>}
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email">Email</label>
-                <input type="email" name="email" 
+        <div className="w-full max-w-xs m-auto">
+            <h1 className="mb-3 text-2xl font-medium text-purple-800">Inicio de sesión</h1>
+            <form onSubmit={handleSubmit} className="bg-white rounded px-4 py-4 shadow-md">
+                <label htmlFor="email" className="block text-sm">Email</label>
+                <input type="email" name="email" placeholder="correo@ejemplo.com"
+                className="w-full appearance-none px-1 border-b-2 mb-3 focus:outline-none"
                 onChange={handleChange}/>
 
-                <label htmlFor="password">Email</label>
-                <input type="password" name="password" id="password"
+                <label htmlFor="password" className="block text-sm" >Contraseña</label>
+                <input type="password" name="password" id="password" placeholder="*******"
+                className="w-full appearance-none px-1 border-b-2 mb-3 focus:outline-none"
                 onChange={handleChange}/>
 
-                <button>Login</button>
+                <button className="w-full rounded bg-purple-800 py-2 text-white font-bold">Login</button>
             </form>
-            <button onClick={handleGoogleLogin}>Iniciar con google</button>
+            <button onClick={handleGoogleLogin}
+            className="w-full bg-white rounded shadow-md mt-3 py-3 ">
+            Iniciar con google</button>
+            <p className="pt-3 mb-3">
+                <span onClick={handleReserPassword}
+                className="cursor-pointer hover:text-purple-800">
+                    has olvidado tu contraseña?
+                </span>
+            </p>
+            {error && <Alert message={error}/>}
         </div>
     );
 }

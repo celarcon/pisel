@@ -37,19 +37,24 @@ export function Register(){
     }
 
     return (
-        <div>
-            {error && <Alert message={error}/>}
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email">Email</label>
-                <input type="email" name="email" 
+        <div className="w-full max-w-xs m-auto">
+            <h1 className="mb-3 text-2xl font-medium text-purple-800">Registro</h1>
+            <form onSubmit={handleSubmit} className="bg-white rounded px-4 py-4 shadow-md">
+                <label htmlFor="email" className="block text-sm">Email</label>
+                <input type="email" name="email"
+                laceholder="correo@ejemplo.com"
+                className="w-full appearance-none px-1 border-b-2 mb-3 focus:outline-none"
                 onChange={handleChange}/>
 
-                <label htmlFor="password">Email</label>
-                <input type="password" name="password" id="password"
+                <label htmlFor="password" className="block text-sm">contraseña</label>
+                <input type="password" name="password" id="password" 
+                 placeholder="*******"
+                 className="w-full appearance-none px-1 border-b-2 mb-3 focus:outline-none"
                 onChange={handleChange}/>
 
-                <button>Registro</button>
+                <button className="w-full rounded bg-purple-800 py-2 text-white font-bold mb-3">Registro</button>
             </form>
+            {error && <Alert message={error}/>}
         </div>
     );
 }

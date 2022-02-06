@@ -9,7 +9,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 function App() {
 
   return (
-    <div className='bg-purple-200 h-screen flex'>
+    <div className='bg-slate-200 h-screen flex'>
       <AuthProvider>
         <Routes>
           <Route path='/' element={
