@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from '../context/authContext';
 import { useNavigate } from "react-router-dom";
+import { Alert } from "./Alert";
 
 export function Register(){
 
@@ -28,6 +29,7 @@ export function Register(){
             navigate('/');
         }catch(error){
             error.code === 'auth/invalid-email' ? setError('Correo invalido'):
+            error.code === 'auth/wrong-password' ? setError('Contraseña erronea'):
             error.code === 'auth/weak-password' ? setError('La contraseña debe tener al menos 6 caracteres'):
             error.code === 'auth/email-already-in-use' ? setError('El correo ya esta en uso'):
             console.log(error.message);
@@ -36,7 +38,7 @@ export function Register(){
 
     return (
         <div>
-            {error && <p>{error}</p>}
+            {error && <Alert message={error}/>}
             <form onSubmit={handleSubmit}>
                 <label htmlFor="email">Email</label>
                 <input type="email" name="email" 
