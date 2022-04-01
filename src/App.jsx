@@ -1,5 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
+import { Main } from './components/Main';
 import { Home } from './components/Home';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
@@ -9,13 +10,11 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 function App() {
 
   return (
-    <div className='bg-slate-200 h-screen flex'>
+    <div className='bg-slate-200'>
       <AuthProvider>
         <Routes>
           <Route path='/' element={
-            <ProtectedRoute>
-              <Home/>
-            </ProtectedRoute>
+              <Main/>
             } />
           <Route path='/home' element={
             <ProtectedRoute>

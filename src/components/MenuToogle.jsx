@@ -12,7 +12,7 @@ const Path = props => (
 );
 
 export const MenuToggle = ({ toggle }) => (
-    <div>
+    <div id="toggleMenu">
         <button
             className="mx-4 my-4 absolute"
             onClick={toggle}>
